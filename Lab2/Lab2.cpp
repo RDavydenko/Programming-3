@@ -20,7 +20,7 @@ struct Product
 // Готовая еда (набор продуктов)
 struct Food
 {
-	char* Name;	
+	char* Name;
 	double Price;
 	int Difficult;
 };
@@ -94,7 +94,7 @@ Food ReadFood()
 	} while (s == NULL || s == nullptr || strlen(s) == 0);
 	food.Name = s;
 
-	int result;	
+	int result;
 	double p;
 	do
 	{
@@ -130,14 +130,14 @@ void DisplayProduct(Product p)
 void DisplayFood(Food f)
 {
 	printf("Информация о продукте\n");
-	printf("Название: %s\n", f.Name);	
+	printf("Название: %s\n", f.Name);
 	printf("Цена: %g\n", f.Price);
 	printf("Сложность: %i\n", f.Difficult);
 }
 
 // Сложение продуктов 
 Product AddProducts(Product p1, Product p2)
-{	
+{
 	Product result;
 	char* strcopy1 = (char*)calloc(MAXLEN, sizeof(char));
 	char* strcopy2 = (char*)calloc(MAXLEN, sizeof(char));
@@ -154,7 +154,7 @@ Product AddProducts(Product p1, Product p2)
 	result.Weight = p1.Weight + p2.Weight;
 	result.Volume = p1.Volume + p2.Volume;
 	result.Price = p1.Price + p2.Price;
-	
+
 	return result;
 }
 
@@ -173,11 +173,86 @@ Food AddFood(Food f1, Food f2)
 	else
 	{
 		result.Name = strcat(strcopy1, strcopy2);
-	}	
+	}
 	result.Price = f1.Price + f2.Price;
 	result.Difficult = (int)ceil((f1.Difficult + (double)f2.Difficult) / 2);
 
 	return result;
+}
+
+// Рассчитать цену за грамм продукта
+double GetPriceByGramm(Product p)
+{
+	return p.Price / p.Weight;
+}
+
+// Расчет эффективности продукта
+double GetEfficiencyProduct(Product p)
+{
+	double averageCalorie = 200;
+	double priceByGramm = GetPriceByGramm(p);
+	double efficiency = 1 / priceByGramm; // Эффективность (грамм за деньги)
+	return efficiency;
+}
+
+// Расчет плотности продукта
+double GetProductDensity(Product p)
+{
+	double density = p.Weight / p.Volume; // Плотность
+	return density;
+}
+
+// Приготовить блюдо из продуктов
+Food CookFood(Product products[], int size)
+{
+	char empty[MAXLEN] = "Блюдо из: ";
+	char whitespace[2] = " ";
+	Food result = { &empty[0], 0, 0 };
+	for (int i = 0; i < size; i++)
+	{
+		char* temp = (char*)calloc(MAXLEN, sizeof(char));
+		strcpy(temp, result.Name);
+		strcat(result.Name, products[i].ProductName);
+		strcat(result.Name, whitespace);
+		result.Price += products[i].Price;
+	}
+	if (size <= 2)
+	{
+		result.Difficult = 1;
+	}
+	else if (size <= 4)
+	{
+		result.Difficult = 2;
+	}
+	else if (size <= 6)
+	{
+		result.Difficult = 3;
+	}
+	else if (size <= 10)
+	{
+		result.Difficult = 4;
+	}
+	else
+	{
+		result.Difficult = 5;
+	}
+	result.Price *= 1.2; // Наценка 20%
+	return result;
+}
+
+// Применить скидку
+Food ApplyDiscount(Food f, int percent)
+{
+	if (percent < 0)
+	{
+		percent = 0;
+	}
+	if (percent > 100)
+	{
+		percent = 100;
+	}
+	f.Price *= (100 - percent) / 100.0;
+	return f;
 }
 
 int main()
@@ -188,13 +263,19 @@ int main()
 
 	// Тестируем структуру Product
 	char name[MAXLEN] = "Курица";
-	Product p1 = InitProduct(&name[0], 1, 10, 103);
+	Product p1 = InitProduct(&name[0], 1000, 100, 103);
 	DisplayProduct(p1);
 	printf("\n");
 	Product p2 = ReadProduct();
 
 	Product sum = AddProducts(p1, p2);
 
+	double chickenEff = GetEfficiencyProduct(p1);
+	double customEff = GetEfficiencyProduct(p2);
+	char* winnerName = chickenEff > customEff ? p1.ProductName : p2.ProductName;
+	char* loserName = chickenEff > customEff ? p2.ProductName : p1.ProductName;
+
+	printf("Эффективность продукта %s больше, чем эффективность продукта %s\n", winnerName, loserName);
 
 	// Тестируем структуру Food
 	char name2[MAXLEN] = "Оливье";
@@ -204,5 +285,13 @@ int main()
 	Food f2 = ReadFood();
 
 	Food sum2 = AddFood(f1, f2);
+
+	Product prods[] = { p1, p2 };
+	Food cookedFood = CookFood(prods, 2);
+
+	printf("Цена блюда до скидки: %g\n", cookedFood.Price);
+	int discount = 75;
+	Food discountedFood = ApplyDiscount(cookedFood, discount);
+	printf("Цена блюда после применения скидки %d%: %g\n", discount, discountedFood.Price);
 }
 
