@@ -5,6 +5,7 @@
 #include <string.h>
 #include <locale.h>
 #include<math.h>
+#include <conio.h>
 #define MAXLEN 1000
 #define PLUS "+"
 
@@ -129,7 +130,7 @@ void DisplayProduct(Product p)
 // Вывод на экран информации о еде
 void DisplayFood(Food f)
 {
-	printf("Информация о продукте\n");
+	printf("Информация о блюде\n");
 	printf("Название: %s\n", f.Name);
 	printf("Цена: %g\n", f.Price);
 	printf("Сложность: %i\n", f.Difficult);
@@ -275,7 +276,9 @@ int main()
 	char* winnerName = chickenEff > customEff ? p1.ProductName : p2.ProductName;
 	char* loserName = chickenEff > customEff ? p2.ProductName : p1.ProductName;
 
+	printf("\n");
 	printf("Эффективность продукта %s больше, чем эффективность продукта %s\n", winnerName, loserName);
+	printf("\n");
 
 	// Тестируем структуру Food
 	char name2[MAXLEN] = "Оливье";
@@ -283,15 +286,43 @@ int main()
 	DisplayFood(f1);
 	printf("\n");
 	Food f2 = ReadFood();
+	printf("\n");
 
 	Food sum2 = AddFood(f1, f2);
 
 	Product prods[] = { p1, p2 };
 	Food cookedFood = CookFood(prods, 2);
+	DisplayFood(cookedFood);
+	printf("\n");
 
+	printf("\n");
 	printf("Цена блюда до скидки: %g\n", cookedFood.Price);
+	printf("\n");
+
 	int discount = 75;
 	Food discountedFood = ApplyDiscount(cookedFood, discount);
-	printf("Цена блюда после применения скидки %d%: %g\n", discount, discountedFood.Price);
+	printf("Цена блюда после применения скидки %d% : %g\n", discount, discountedFood.Price);
+	printf("\n");
+
+	// Пример работы с динамическими переменными типа структур
+	Product* dynamicP1 = (Product*)malloc(sizeof(Product));
+	char prodName[MAXLEN] ="Трюфели";
+	dynamicP1->ProductName = prodName;
+	dynamicP1->Weight = 1500;
+	dynamicP1->Volume = 500;
+	dynamicP1->Price = 10000;
+	DisplayProduct(*dynamicP1);
+	printf("\n");
+
+	Food* dynamicF1 = (Food*)malloc(sizeof(Food));
+	char foodName[MAXLEN] = "Утка по-пекински";
+	dynamicF1->Name = foodName;
+	dynamicF1->Price = 5000;
+	dynamicF1->Difficult = 3;
+	DisplayFood(*dynamicF1);
+	printf("\n");
+
+
+	_getch();
 }
 
