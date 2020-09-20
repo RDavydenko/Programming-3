@@ -55,7 +55,7 @@ public:
 		cout << "Объем: " << this->_volume << endl;
 		cout << "Цена: " << this->_price << endl;
 	}
-
+	
 	// Ввести с клавиатуры информацию о продукте
 	static Product ReadFromInput()
 	{
@@ -132,11 +132,13 @@ private:
 	string _name; // Название
 	double _price; // Цена
 	int _difficult; // Сложность
+	/* Ассоциация */ Product* _products; // Продукты, из которых состоит блюдо
 
 public:
 	string get_name() { return this->_name; }
 	double get_price() { return this->_price; }
 	int get_difficult() { return this->_difficult; }
+	Product* get_products() { return this->_products; }
 
 public:
 	// Конструктор класса
@@ -147,6 +149,42 @@ public:
 		_difficult = difficult;
 	}
 
+	// Конструктор класса 
+	Food(string name, Product* products)
+	{
+		this->_name = name;
+		this->_price = 0;
+		this->_difficult = 0;
+		this->_products = products;
+
+		int size = sizeof(products);
+		for (int i = 0; i < size; i++)
+		{
+			_price += products[0].get_price();
+		}
+		this->_price *= 1.2; // Наценка 20%
+		if (size <= 2)
+		{
+			this->_difficult = 1;
+		}
+		else if (size <= 4)
+		{
+			this->_difficult = 2;
+		}
+		else if (size <= 6)
+		{
+			this->_difficult = 3;
+		}
+		else if (size <= 10)
+		{
+			this->_difficult = 4;
+		}
+		else
+		{
+			this->_difficult = 5;
+		}
+	}
+
 	// Вывести информацию на экран
 	void Display()
 	{
@@ -154,6 +192,27 @@ public:
 		cout << "Название: " << this->_name << endl;
 		cout << "Цена:  " << this->_price << endl;
 		cout << "Сложность: " << this->_difficult << endl;
+	}
+
+	// Вывести информацию о продуктах, которые составляют блюдо
+	void AboutProducts()
+	{
+		if (_products == nullptr) 
+		{
+			cout << "Информации о продуктах нет" << endl;
+		}
+		else 
+		{
+			int size = sizeof(_products);
+			for (int i = 0; i < size; i++)
+			{
+				cout << "Название: " << _products[i].get_name() << endl;
+				cout << "Вес: " << _products[i].get_weight() << endl;
+				cout << "Объем: " << _products[i].get_volume() << endl;
+				cout << "Цена: " << _products[i].get_price() << endl;
+				cout << endl;
+			}
+		}
 	}
 
 	// Прибавить к этому блюду другое блюдо
@@ -209,8 +268,9 @@ public:
 	}
 
 	// Приготовить еду из продуктов
-	static Food CookFood(Product products[], int size)
+	static Food CookFood(Product products[])
 	{
+		int size = sizeof(products);
 		string compositeName = "";
 		double price = 0;
 		for (int i = 0; i < size; i++)
@@ -245,7 +305,9 @@ public:
 			difficult = 5;
 		}
 
-		return Food(compositeName, price, difficult);
+		Food result = Food(compositeName, price, difficult);
+		result._products = products;
+		return result;		
 	}
 };
 
@@ -254,6 +316,19 @@ int main()
 	system("chcp 1251");
 	setlocale(LC_ALL, "Russian");
 	system("cls");
+
+	// Создаем массив продуктов
+	Product products1[] = {
+		Product("Хлеб", 250, 1, 30),
+		Product("Масло", 50, 0.2, 20),
+		Product("Сыр", 100, 0.5, 50),
+		Product("Колбаса",100, 0.75, 40)
+	};
+	// Создаем бутерброд из продуктов
+	Food butter = Food("Бутерброд", products1);
+	butter.Display();
+	cout << endl;
+	butter.AboutProducts(); // Выводим информацию о продуктах, которые содерждатся в butter
 
 	cout << "Заполните поля о продукте: " << endl;
 	// Статический метод. Позволяет нам выполнять какие-либо действия
@@ -286,7 +361,7 @@ int main()
 		p1
 	};
 	// Статический метод позволяет приготовить блюдо из массива продуктов
-	Food food = Food::CookFood(products, 2);
+	Food food = Food::CookFood(products);
 	food.Display(); // Отображаем информацию о food
 	cout << endl;
 	cout << "Заполните поля о блюде: " << endl;
@@ -310,7 +385,7 @@ int main()
 		cout << endl;
 	}
 	// Готовим блюдо из введенных продуктов
-	Food cookedFood = Food::CookFood(productsArray, n);
+	Food cookedFood = Food::CookFood(productsArray);
 	cout << "Приготовленное блюдо: " << endl;
 	cookedFood.Display();
 	cout << endl;
