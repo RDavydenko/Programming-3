@@ -66,28 +66,28 @@ public:
 			cin >> name;
 		} while (name.empty());
 
-		double weight = 0;
+		double* weightPtr = (double*)malloc(sizeof(double));
 		do
 		{
 			cout << "Введите вес: ";
-			cin >> weight;
-		} while (weight == 0);
+			cin >> *weightPtr;
+		} while (*weightPtr == 0);
 
-		double volume = 0;
+		double* volumePtr = (double*)malloc(sizeof(double));
 		do
 		{
 			cout << "Введите объем: ";
-			cin >> volume;
-		} while (volume == 0);
+			cin >> *volumePtr;
+		} while (*volumePtr == 0);
 
-		double price = 0;
+		double* pricePtr = (double*)malloc(sizeof(double));
 		do
 		{
 			cout << "Введите цену: ";
-			cin >> price;
-		} while (price == 0);
+			cin >> *pricePtr;
+		} while (*pricePtr == 0);
 
-		return Product(name, weight,  volume, price);
+		return Product(name, *weightPtr,  *volumePtr, *pricePtr);
 	}
 
 	// Прибавить к этому продукту другой продукт
@@ -177,21 +177,21 @@ public:
 			cin >> name;
 		} while (name.empty());
 
-		double price = 0;
+		double* pricePtr = (double*)malloc(sizeof(double));
 		do
 		{
 			cout << "Введите цену: ";
-			cin >> price;
-		} while (price == 0);
+			cin >> *pricePtr;
+		} while (*pricePtr == 0);
 
-		int difficult = 0;
+		int* difficultPtr = (int*)malloc(sizeof(int));
 		do
 		{
 			cout << "Введите сложность: ";
-			cin >> difficult;
-		} while (difficult == 0);
+			cin >> *difficultPtr;
+		} while (*difficultPtr == 0);
 
-		return Food(name, price, difficult);
+		return Food(name, *pricePtr, *difficultPtr);
 	}
 
 	// Применить скидку
@@ -255,63 +255,65 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	system("cls");
 
-	//cout << "Заполните поля о продукте: " << endl;
-	//// Статический метод. Позволяет нам выполнять какие-либо действия
-	//// без создания экземпляра класса. В данном случае статический метод
-	//// создает экземпляр класса путем ввода данных с клавиатуры
-	//Product prod = Product::ReadFromInput();
+	cout << "Заполните поля о продукте: " << endl;
+	// Статический метод. Позволяет нам выполнять какие-либо действия
+	// без создания экземпляра класса. В данном случае статический метод
+	// создает экземпляр класса путем ввода данных с клавиатуры
+	Product prod = Product::ReadFromInput();
 
-	//// Инициализируем экземпляры классов с помощью конструкторов
-	//Product p1 = Product("Картошка", 10500, 3, 300);
-	//Product p2 = Product("Капуста", 500, 0.4, 40);
-	//cout << endl;
-	//p1.Display(); // Отображаем p1
-	//cout << endl;
-	//p1.Add(p2); // Прибавляем к p1 p2
-	//p1.Display(); // Отображаем p1
-	//cout << endl;
-	//p2.Display(); // Отображаем p2
-	//cout << endl;
-	//// Рассчитываем какой продукт эффективнее
-	//double p1Eff = p1.GetEfficiencyProduct();
-	//double p2Eff = p2.GetEfficiencyProduct();
-	//string winnerName = p1Eff > p2Eff ? p1.get_name() : p2.get_name();
-	//string loserName = p2Eff > p1Eff ? p2.get_name() : p1.get_name();
-	//cout << "Эффективность продукта" << winnerName << " больше, чем эффективность продукта" << loserName << endl;
-	//cout << endl;
+	// Инициализируем экземпляры классов с помощью конструкторов
+	Product p1 = Product("Картошка", 10500, 3, 300);
+	Product p2 = Product("Капуста", 500, 0.4, 40);
+	cout << endl;
+	p1.Display(); // Отображаем p1
+	cout << endl;
+	p1.Add(p2); // Прибавляем к p1 p2
+	p1.Display(); // Отображаем p1
+	cout << endl;
+	p2.Display(); // Отображаем p2
+	cout << endl;
+	// Рассчитываем какой продукт эффективнее
+	double p1Eff = p1.GetEfficiencyProduct();
+	double p2Eff = p2.GetEfficiencyProduct();
+	string winnerName = p1Eff > p2Eff ? p1.get_name() : p2.get_name();
+	string loserName = p2Eff > p1Eff ? p2.get_name() : p1.get_name();
+	cout << "Эффективность продукта" << winnerName << " больше, чем эффективность продукта" << loserName << endl;
+	cout << endl;
 
-	//Product products[] =
-	//{
-	//	Product("Огурцы", 2000, 1, 80),
-	//	p1
-	//};
-	//// Статический метод позволяет приготовить блюдо из массива продуктов
-	//Food food = Food::CookFood(products, 2);
-	//food.Display(); // Отображаем информацию о food
-	//cout << endl;
-	//cout << "Заполните поля о блюде: " << endl;
-	//Food food2 = Food::ReadFromInput(); // Заполняем информацию о блюде
-	//cout << endl;
-	//food2.ApplyDiscount(30); // Применяем скидку 30%
-	//cout << "Введенный продукт после применения скидки 30%: " << endl;
-	//food2.Display();
-	//cout << endl;
+	Product products[] =
+	{
+		Product("Огурцы", 2000, 1, 80),
+		p1
+	};
+	// Статический метод позволяет приготовить блюдо из массива продуктов
+	Food food = Food::CookFood(products, 2);
+	food.Display(); // Отображаем информацию о food
+	cout << endl;
+	cout << "Заполните поля о блюде: " << endl;
+	Food food2 = Food::ReadFromInput(); // Заполняем информацию о блюде
+	cout << endl;
+	food2.ApplyDiscount(30); // Применяем скидку 30%
+	cout << "Введенный продукт после применения скидки 30%: " << endl;
+	food2.Display();
+	cout << endl;
 
 	cout << "Сейчас будем готовить блюдо. Введите количество продуктов, из скольких оно будет состоять: ";
 	int n; // Количество продуктов
 	cin >> n;
 	// ДИНАМИЧЕСКИ инициализируем массив объектов класса Product
-	Product* products = new Product[n]();
+	Product* productsArray = new Product[n]();
 	for (int i = 0; i < n; i++)
 	{
 		cout << "Введите " << i + 1 << " продукт из " << n << endl;
 		Product prod = Product::ReadFromInput();
-		products[i] = prod;
+		productsArray[i] = prod;
 		cout << endl;
 	}
 	// Готовим блюдо из введенных продуктов
-	Food cookedFood = Food::CookFood(products, n);
+	Food cookedFood = Food::CookFood(productsArray, n);
 	cout << "Приготовленное блюдо: " << endl;
 	cookedFood.Display();
 	cout << endl;
+	// Очищаем память
+	delete[] productsArray;
 }
