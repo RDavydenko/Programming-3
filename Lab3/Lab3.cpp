@@ -274,10 +274,10 @@ int main()
 	cout << endl;
 	// Рассчитываем какой продукт эффективнее
 	double p1Eff = p1.GetEfficiencyProduct();
-	double p2Eff = p2.GetEfficiencyProduct();
-	string winnerName = p1Eff > p2Eff ? p1.get_name() : p2.get_name();
-	string loserName = p2Eff > p1Eff ? p2.get_name() : p1.get_name();
-	cout << "Эффективность продукта" << winnerName << " больше, чем эффективность продукта" << loserName << endl;
+	double prodEff = prod.GetEfficiencyProduct();
+	string winnerName = p1Eff > prodEff ? p1.get_name() : prod.get_name();
+	string loserName = prodEff < p1Eff ? prod.get_name() : p1.get_name();
+	cout << "Эффективность продукта " << winnerName << " больше, чем эффективность продукта " << loserName << endl;
 	cout << endl;
 
 	Product products[] =
