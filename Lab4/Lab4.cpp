@@ -268,9 +268,8 @@ public:
 	}
 
 	// Приготовить еду из продуктов
-	static Food CookFood(Product products[])
-	{
-		int size = sizeof(products);
+	static Food CookFood(Product products[], int size)
+	{		
 		string compositeName = "";
 		double price = 0;
 		for (int i = 0; i < size; i++)
@@ -361,7 +360,7 @@ int main()
 		p1
 	};
 	// Статический метод позволяет приготовить блюдо из массива продуктов
-	Food food = Food::CookFood(products);
+	Food food = Food::CookFood(products, 2);
 	food.Display(); // Отображаем информацию о food
 	cout << endl;
 	cout << "Заполните поля о блюде: " << endl;
@@ -385,7 +384,7 @@ int main()
 		cout << endl;
 	}
 	// Готовим блюдо из введенных продуктов
-	Food cookedFood = Food::CookFood(productsArray);
+	Food cookedFood = Food::CookFood(productsArray, n);
 	cout << "Приготовленное блюдо: " << endl;
 	cookedFood.Display();
 	cout << endl;
