@@ -55,7 +55,7 @@ public:
 		cout << "Объем: " << this->_volume << endl;
 		cout << "Цена: " << this->_price << endl;
 	}
-	
+
 	// Ввести с клавиатуры информацию о продукте
 	static Product ReadFromInput()
 	{
@@ -122,6 +122,32 @@ public:
 	{
 		double density = this->_weight / this->_volume; // Плотность
 		return density;
+	}
+
+	// Перегрузка оператора +
+	Product operator + (Product p1) {
+		this->Add(p1);
+		return *this;
+	}
+
+	// Перегрузка оператора ++ (префиксная)
+	Product operator++ ()
+	{
+		this->_volume *= 2;
+		this->_weight *= 2;
+
+		return *this;
+	}
+
+	// Перегрузка оператора ++ (постфиксная)
+	Product operator++ (int) 
+	{
+		Product prev = *this;
+
+		this->_volume *= 2;
+		this->_weight *= 2;
+
+		return prev;
 	}
 };
 
@@ -197,11 +223,11 @@ public:
 	// Вывести информацию о продуктах, которые составляют блюдо
 	void AboutProducts()
 	{
-		if (_products == nullptr) 
+		if (_products == nullptr)
 		{
 			cout << "Информации о продуктах нет" << endl;
 		}
-		else 
+		else
 		{
 			int size = sizeof(_products);
 			for (int i = 0; i < size; i++)
@@ -227,7 +253,7 @@ public:
 	}
 
 	// Ввести с клавиатуры информацию о блюде
-	static Food ReadFromInput()
+	static Food* ReadFromInput()
 	{
 		string name;
 		do
@@ -236,21 +262,22 @@ public:
 			cin >> name;
 		} while (name.empty());
 
-		double* pricePtr = (double*)malloc(sizeof(double));
+		double price = 0;
 		do
 		{
 			cout << "Введите цену: ";
-			cin >> *pricePtr;
-		} while (*pricePtr == 0);
+			cin >> price;
+		} while (price == 0);
 
-		int* difficultPtr = (int*)malloc(sizeof(int));
+		int difficult = 0;
 		do
 		{
 			cout << "Введите сложность: ";
-			cin >> *difficultPtr;
-		} while (*difficultPtr == 0);
+			cin >> difficult;
+		} while (difficult == 0);
 
-		return Food(name, *pricePtr, *difficultPtr);
+		static Food food = Food(name, price, difficult);
+		return &food;
 	}
 
 	// Применить скидку
@@ -269,7 +296,7 @@ public:
 
 	// Приготовить еду из продуктов
 	static Food CookFood(Product products[], int size)
-	{		
+	{
 		string compositeName = "";
 		double price = 0;
 		for (int i = 0; i < size; i++)
@@ -306,9 +333,23 @@ public:
 
 		Food result = Food(compositeName, price, difficult);
 		result._products = products;
-		return result;		
+		return result;
+	}
+
+	// Дружественная функция
+	friend void Rename(Food& food, string name);
+
+	// Перегрузка оператора +
+	Food operator + (Food f1) {
+		this->Add(f1);
+		return *this;
 	}
 };
+
+// Дружественная функция
+void Rename(Food& food, string name) {
+	food._name = name;
+}
 
 int main()
 {
@@ -341,11 +382,16 @@ int main()
 	cout << endl;
 	p1.Display(); // Отображаем p1
 	cout << endl;
-	p1.Add(p2); // Прибавляем к p1 p2
+	p1 = p1 + p2; // Прибавляем к p1 p2 (Используя перегрузку)
 	p1.Display(); // Отображаем p1
 	cout << endl;
 	p2.Display(); // Отображаем p2
 	cout << endl;
+
+	cout << "Капуста после оператора ++" << endl;
+	p2++; // Используем перегрузку
+	p2.Display();
+
 	// Рассчитываем какой продукт эффективнее
 	double p1Eff = p1.GetEfficiencyProduct();
 	double prodEff = prod.GetEfficiencyProduct();
@@ -361,10 +407,14 @@ int main()
 	};
 	// Статический метод позволяет приготовить блюдо из массива продуктов
 	Food food = Food::CookFood(products, 2);
+
+	// Используем дружественную функцию
+	Rename(food, "Салат");
+
 	food.Display(); // Отображаем информацию о food
 	cout << endl;
 	cout << "Заполните поля о блюде: " << endl;
-	Food food2 = Food::ReadFromInput(); // Заполняем информацию о блюде
+	Food food2 = *(Food::ReadFromInput()); // Заполняем информацию о блюде
 	cout << endl;
 	food2.ApplyDiscount(30); // Применяем скидку 30%
 	cout << "Введенный продукт после применения скидки 30%: " << endl;
