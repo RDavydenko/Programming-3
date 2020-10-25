@@ -341,3 +341,6 @@ healthchecksdb
 
 # Java compiled files
 Java/*.class
+
+# CSharp compiled .exe
+CSharp/*.exe
