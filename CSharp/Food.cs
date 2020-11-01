@@ -3,7 +3,7 @@ using System;
 namespace Lab
 {
     // Блюдо (приготовленное из продуктов)
-    class Food
+    public class Food
     {
         private String _name; // Название
         private double _price; // Цена
