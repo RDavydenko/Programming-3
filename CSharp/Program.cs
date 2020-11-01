@@ -1,11 +1,39 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 namespace Lab
 {  
     public class Program {
+
+        // Пример функции без ref
+        public static void NoRefFunction(Product prod) {
+            prod.Price *= 2; // Умножаем цену на два
+        }
+
+        // Пример функции с ref
+        public static void RefFunction(ref Product prod) {
+            prod.Price *= 2; // Умножаем цену на два
+        }
+
+        // Пример функции с out
+        public static void OutFunction(out Product prod) {
+            prod = Product.Default(); // Инициализируем prod
+        }
+
+
         public static void Main(String[] args) {
+            // Демонстрация работы с массивом продуктов
             // Создаем массив продуктов
             Product[] products1 = { new Product("Хлеб", 250, 1, 30), new Product("Масло", 50, 0.2, 20),
-                    new Product("Сыр", 100, 0.5, 50), new Product("Колбаса", 100, 0.75, 40) };
+                    new Product("Сыр", 100, 0.5, 50), new Product("Колбаса", 100, 0.75, 40),
+                    new Product("Вино", 1000, 1, 400) };
+            
+            var productsList = new List<Product>(products1);
+            productsList.Remove(new List<Product>(products1) // Удаляем вино из массива продуктов
+                            .FirstOrDefault(x => x.Name == "Вино"));
+            products1 =  productsList.ToArray();
+            var sumWeight = products1.Sum(x => x.Weight); // Считаем общий вес
+            Console.WriteLine($"Общий вес всех продуктов {sumWeight}\n");
 
             // Создаем бутерброд из продуктов
             Food butter = new Food("Бутерброд", products1);
@@ -34,8 +62,8 @@ namespace Lab
             // Рассчитываем какой продукт эффективнее
             double p1Eff = p1.GetEfficiencyProduct();
             double prodEff = prod.GetEfficiencyProduct();
-            String winnerName = p1Eff > prodEff ? p1.get_name() : prod.get_name();
-            String loserName = prodEff < p1Eff ? prod.get_name() : p1.get_name();
+            String winnerName = p1Eff > prodEff ? p1.Name : prod.Name;
+            String loserName = prodEff < p1Eff ? prod.Name : p1.Name;
             Console.Write("Эффективность продукта {0} больше, чем эффективность продукта {1}\n", winnerName, loserName);
             Console.WriteLine();
 
@@ -70,6 +98,15 @@ namespace Lab
             Console.WriteLine("Приготовленное блюдо: ");
             cookedFood.Display();
             Console.WriteLine();
+
+
+            // Тестируем ref и out
+            var test = new Product("test", 1, 1, 1);
+            var test2 = new Product("test", 1, 1, 1);
+            RefFunction(ref test); // Передача параметра по ссылке - Цена умножается на 2 (Price: 2)
+            NoRefFunction(test); // Цена тоже умножится на 2, несмотря на отсутсвие модификатора ref, т.к. это ссылочный тип данных
+            OutFunction(out var newOutProd); // Модификтор out гарантирует, что newOutProd будет инициализирован
+            
 
             Console.ReadKey();
         }
