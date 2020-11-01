@@ -1,10 +1,30 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
+        // Демонстрация работы с массивом объектов
         // Создаем массив продуктов
         Product products1[] = { new Product("Хлеб", 250, 1, 30), new Product("Масло", 50, 0.2, 20),
-                new Product("Сыр", 100, 0.5, 50), new Product("Колбаса", 100, 0.75, 40) };
+                new Product("Сыр", 100, 0.5, 50), new Product("Колбаса", 100, 0.75, 40),
+                new Product("Вино", 1000, 1, 250) };
+        ArrayList<Product> list = new ArrayList<>(Arrays.asList(products1)); // преобразование к списку продуктов
+        // Находим продукт, который собираемся удалить
+        Product deleted = list.stream().filter(x -> (x.get_name().toLowerCase() == "Вино".toLowerCase())).findFirst().orElse(null);
+        if (deleted != null) { // удаляем, если найден
+            list.remove(deleted);
+            products1 = list.toArray(new Product[list.size()]);
+        }
+
+        // Возврат целочисленного значения из метода через вспомогательный класс 
+        Product bread = new Product("Хлеб", 250, 1 , 30); // Хлебушек
+        var storageLife = bread.new StorageLife(LocalDate.now(), 10); // Cрок хранения в 10 дней
+        bread.set_StorageLife(storageLife); // Устанавливаем срок хранения в 10 дней
+        int allDays = bread.get_StorageLife().getStorageLifeInDays(); // Сколько всего хранится продукт (максимально)
+        int daysRemainded = bread.get_StorageLife().howManyDaysRemaind(); // Сколько дней осталось до просрочки
+        System.out.printf("Хлебу осталось %d дней из %d дней\n\n", daysRemainded, allDays);
 
         // Создаем бутерброд из продуктов
         Food butter = new Food("Бутерброд", products1);

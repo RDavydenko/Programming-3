@@ -1,15 +1,18 @@
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Scanner;
 
 // Продукт
 public class Product {
-    private String _name; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-    private double _weight; // пїЅпїЅпїЅ
-    private double _volume; // пїЅпїЅпїЅпїЅпїЅ
-    private double _price; // пїЅпїЅпїЅпїЅ
+    private String _name; // Название
+    private double _weight; // Вес
+    private double _volume; // Объем
+    private double _price; // Цена
+    private StorageLife _storageLife = null; // Срок хранения
 
     // Дефолтный экземпляр класса Продукт
     public static Product Default() {
-        return new Product("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 1000, 1000, 1000);
+        return new Product("Безымянный", 1000, 1000, 1000);
     }
 
     public String get_name() {
@@ -27,6 +30,19 @@ public class Product {
     public double get_price() {
         return this._price;
     }
+    
+    // Получить срок хранения
+    public StorageLife get_StorageLife() {
+        return this._storageLife;
+    }
+
+    // Устанавливаем срок хранения на продукт
+    public void set_StorageLife(StorageLife storageLife) {
+        if (storageLife != null) { // Если срок хранения еще не установлен
+            // Иначе нельзя менять
+            this._storageLife = storageLife;
+        }
+    } 
 
     // Конструктор без параметров
     public Product() {
@@ -55,48 +71,40 @@ public class Product {
     }
 
     // Считываем информацию с клавиатуры и создаем новый экзмепляр Продукта
-    public static Product ReadFromInput()
-        {
-            String name;
-            Scanner in = new Scanner(System.in, "Cp866");
-            do
-            {
-               System.out.print("Введите название: ");
-               name = in.nextLine();
-            } while (name == null || name.length() == 0);
-    
-            double weight = 0;
-            do
-            {
-                System.out.print("Введите вес: ");
-                if (in.hasNextDouble())
-                {
-                    weight = in.nextDouble();
-                }
-            } while (weight == 0);
-    
-            double volume = 0;
-            do
-            {
-                System.out.print("Введите объем: ");
-                if (in.hasNextDouble())
-                {
-                    volume = in.nextDouble();
-                }
-            } while (volume == 0);
-    
-            double price = 0;
-            do
-            {
-                System.out.print("Введите цену: ");
-                if (in.hasNextDouble())
-                {
-                    price = in.nextDouble();
-                }
-            } while (price == 0);
-    
-            return new Product(name, weight, volume, price);
-        }
+    public static Product ReadFromInput() {
+        String name;
+        Scanner in = new Scanner(System.in, "Cp866");
+        do {
+            System.out.print("Введите название: ");
+            name = in.nextLine();
+        } while (name == null || name.length() == 0);
+
+        double weight = 0;
+        do {
+            System.out.print("Введите вес: ");
+            if (in.hasNextDouble()) {
+                weight = in.nextDouble();
+            }
+        } while (weight == 0);
+
+        double volume = 0;
+        do {
+            System.out.print("Введите объем: ");
+            if (in.hasNextDouble()) {
+                volume = in.nextDouble();
+            }
+        } while (volume == 0);
+
+        double price = 0;
+        do {
+            System.out.print("Введите цену: ");
+            if (in.hasNextDouble()) {
+                price = in.nextDouble();
+            }
+        } while (price == 0);
+
+        return new Product(name, weight, volume, price);
+    }
 
     // Прибавить продукт
     public void Add(Product other) {
@@ -125,5 +133,35 @@ public class Product {
     public double GetProductDensity() {
         double density = this._weight / this._volume; // Плотность
         return density;
+    }
+
+    // Срок годности
+    public class StorageLife {
+        private LocalDate startDate; // Начальная дата
+        private LocalDate endDate; // Конечная дата
+        
+        // Конструктор - начальная дата и сколько дней может храниться
+        public StorageLife(LocalDate startDate, int days) {
+            this.startDate = startDate;
+            this.endDate = startDate.plusDays(days);
+        }
+
+        // Конструктор - конечная дата
+        public StorageLife(LocalDate endDate) {
+            this.startDate = LocalDate.now();
+            this.endDate = endDate;
+        }
+
+        // Сколько дней осталось до истечения срока годности
+        public int howManyDaysRemaind() {
+            var period = Period.between(LocalDate.now(), endDate);
+            return period.getDays();
+        }
+
+        // Получить полный срок хранения
+        public int getStorageLifeInDays() {
+            Period period = Period.between(startDate, endDate);
+            return period.getDays();
+        }   
     }
 }
