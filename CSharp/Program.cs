@@ -104,7 +104,7 @@ namespace Lab
             var test = new Product("test", 1, 1, 1);
             var test2 = new Product("test", 1, 1, 1);
             RefFunction(ref test); // Передача параметра по ссылке - Цена умножается на 2 (Price: 2)
-            NoRefFunction(test); // Цена тоже умножится на 2, несмотря на отсутсвие модификатора ref, т.к. это ссылочный тип данных
+            NoRefFunction(test); // А тут цена не умножится на 2, т.к. теперь это тип значения, и он просто копируется в метод, а не передается ссылкой
             OutFunction(out var newOutProd); // Модификтор out гарантирует, что newOutProd будет инициализирован
             
 

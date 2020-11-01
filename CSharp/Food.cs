@@ -3,14 +3,11 @@ using System;
 namespace Lab
 {
     // Блюдо (приготовленное из продуктов)
-    class Food
+    public struct Food
     {
         private String _name; // Название
         private double _price; // Цена
         private int _difficult; // Сложность
-
-        /* Ассоциация */
-        Product[] _products; // Продукты, из которых состоит блюдо
 
         public String Name
         {
@@ -48,20 +45,16 @@ namespace Lab
             }
         }
 
-        public Product[] Products
-        {
-            get
-            {
-                return this._products;
-            }
-        }
-
+        /* Ассоциация */
+        public Product[] Products {get; private set; }// Продукты, из которых состоит блюдо
+    
         // Конструктор класса
         public Food(String name, double price, int difficult)
         {
             _name = name;
             _price = price;
             _difficult = difficult;
+            Products = new Product[0];
         }
 
         // Конструктор класса
@@ -70,7 +63,7 @@ namespace Lab
             this._name = name;
             this._price = 0;
             this._difficult = 0;
-            this._products = products;
+            this.Products = products;
 
             for (int i = 0; i < products.Length; i++)
             {
@@ -111,18 +104,18 @@ namespace Lab
         // Вывести информацию о продуктах, которые составляют блюдо
         public void AboutProducts()
         {
-            if (_products.Length == 0)
+            if (Products.Length == 0)
             {
                 Console.WriteLine("Информации о продуктах нет");
             }
             else
             {
-                for (int i = 0; i < _products.Length; i++)
+                for (int i = 0; i < Products.Length; i++)
                 {
-                    Console.Write("Название: {0}\n", _products[i].Name);
-                    Console.Write("Вес: {0}\n", _products[i].Weight);
-                    Console.Write("Объем: {0}\n", _products[i].Volume);
-                    Console.Write("Цена: {0}\n", _products[i].Price);
+                    Console.Write("Название: {0}\n", Products[i].Name);
+                    Console.Write("Вес: {0}\n", Products[i].Weight);
+                    Console.Write("Объем: {0}\n", Products[i].Volume);
+                    Console.Write("Цена: {0}\n", Products[i].Price);
                     Console.WriteLine();
                 }
             }
@@ -218,7 +211,7 @@ namespace Lab
             }
 
             Food result = new Food(compositeName, price, difficult);
-            result._products = products;
+            result.Products = products;
             return result;
         }
 

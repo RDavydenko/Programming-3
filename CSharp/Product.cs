@@ -3,7 +3,7 @@ using System;
 namespace Lab
 {
     // Продукт (пищевой)
-    public class Product
+    public struct Product
     {
         private String _name; // Название
         private double _weight; // Вес
@@ -62,16 +62,6 @@ namespace Lab
             {
                 _price = value;
             }
-        }
-
-        // Конструктор класса по умолчанию (без параметров)
-        public Product()
-        {
-            Product _default = Product.Default();
-            _name = _default.Name;
-            _weight = _default.Weight;
-            _volume = _default.Volume;
-            _price = _default.Price;
         }
 
         // Конструктор класса с параметрами
