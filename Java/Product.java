@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
-// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+// Продукт
 public class Product {
     private String _name; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private double _weight; // пїЅпїЅпїЅ
     private double _volume; // пїЅпїЅпїЅпїЅпїЅ
     private double _price; // пїЅпїЅпїЅпїЅ
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Дефолтный экземпляр класса Продукт
     public static Product Default() {
         return new Product("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 1000, 1000, 1000);
     }
@@ -28,7 +28,7 @@ public class Product {
         return this._price;
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    // Конструктор без параметров
     public Product() {
         Product _default = Product.Default();
         _name = _default.get_name();
@@ -37,7 +37,7 @@ public class Product {
         _price = _default.get_price();
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Конструктор с параметрами
     public Product(String name, double weight, double volume, double price) {
         _name = name;
         _weight = weight;
@@ -45,30 +45,30 @@ public class Product {
         _price = price;
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    // Отображение информации о продукте
     public void Display() {
-        System.out.printf("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\n");
-        System.out.printf("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: %s\n", this._name);
-        System.out.printf("пїЅпїЅпїЅ:  %g\n", this._weight);
-        System.out.printf("пїЅпїЅпїЅпїЅпїЅ: %g\n", this._volume);
-        System.out.printf("пїЅпїЅпїЅпїЅ: %g\n", this._price);
+        System.out.printf("Информация о продукте:\n");
+        System.out.printf("Название: %s\n", this._name);
+        System.out.printf("Вес:  %g\n", this._weight);
+        System.out.printf("Объем: %g\n", this._volume);
+        System.out.printf("Цена: %g\n", this._price);
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Считываем информацию с клавиатуры и создаем новый экзмепляр Продукта
     public static Product ReadFromInput()
         {
             String name;
             Scanner in = new Scanner(System.in, "Cp866");
             do
             {
-               System.out.print("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ");
+               System.out.print("Введите название: ");
                name = in.nextLine();
             } while (name == null || name.length() == 0);
     
             double weight = 0;
             do
             {
-                System.out.print("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ: ");
+                System.out.print("Введите вес: ");
                 if (in.hasNextDouble())
                 {
                     weight = in.nextDouble();
@@ -78,7 +78,7 @@ public class Product {
             double volume = 0;
             do
             {
-                System.out.print("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: ");
+                System.out.print("Введите объем: ");
                 if (in.hasNextDouble())
                 {
                     volume = in.nextDouble();
@@ -88,7 +88,7 @@ public class Product {
             double price = 0;
             do
             {
-                System.out.print("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: ");
+                System.out.print("Введите цену: ");
                 if (in.hasNextDouble())
                 {
                     price = in.nextDouble();
@@ -98,7 +98,7 @@ public class Product {
             return new Product(name, weight, volume, price);
         }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Прибавить продукт
     public void Add(Product other) {
         if (other._name != this._name) {
             this._name += (" + " + other._name);
@@ -108,22 +108,22 @@ public class Product {
         this._price += other._price;
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Получить цену за грамм
     public double GetPriceByGramm() {
         return this._price / this._weight;
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Получить эффективность продукта
     public double GetEfficiencyProduct() {
         double averageCalorie = 200;
         double priceByGramm = GetPriceByGramm();
-        double efficiency = 1 / priceByGramm; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+        double efficiency = 1 / priceByGramm; // Эффективность
         return efficiency;
     }
 
-    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // Получить плотность продукта
     public double GetProductDensity() {
-        double density = this._weight / this._volume; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        double density = this._weight / this._volume; // Плотность
         return density;
     }
 }
