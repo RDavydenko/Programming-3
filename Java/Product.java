@@ -11,9 +11,7 @@ public class Product {
     private StorageLife _storageLife = null; // Срок хранения
 
     // Дефолтный экземпляр класса Продукт
-    public static Product Default() {
-        return new Product("Безымянный", 1000, 1000, 1000);
-    }
+    public static Product Default = new Product("Безымянный", 1000, 1000, 1000);
 
     public String get_name() {
         return this._name;
@@ -46,7 +44,7 @@ public class Product {
 
     // Конструктор без параметров
     public Product() {
-        Product _default = Product.Default();
+        Product _default = Product.Default;
         _name = _default.get_name();
         _weight = _default.get_weight();
         _volume = _default.get_volume();
