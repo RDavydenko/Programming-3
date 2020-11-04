@@ -10,7 +10,7 @@ namespace Lab
         private double _volume; // Объем
         private double _price; // Цена
 
-        // Статическая функция, возвращающая стандартный продукт
+        // Статическое поле, возвращающее стандартный продукт
         public static Product Default
         {
             get {
