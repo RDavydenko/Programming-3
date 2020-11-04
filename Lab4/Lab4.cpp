@@ -13,11 +13,8 @@ private:
 	double _price; // Цена
 
 public:
-	// Статическая функция, возвращающая стандартный продукт
-	static Product Default()
-	{
-		return Product("Продукт", 1000, 1000, 1000);
-	}
+	// Статический метод, возвращающий стандартный продукт
+	static Product Default;	
 
 public:
 	string get_name() { return this->_name; }
@@ -30,7 +27,7 @@ public:
 	// Конструктор класса по умолчанию (без параметров)
 	Product()
 	{
-		Product _default = Product::Default();
+		Product _default = Product::Default;
 		_name = _default.get_name();
 		_weight = _default.get_weight();
 		_volume = _default.get_volume();
@@ -356,6 +353,9 @@ int main()
 	system("chcp 1251");
 	setlocale(LC_ALL, "Russian");
 	system("cls");
+
+	// Инициализируем статическое поле 
+	Product::Default = Product("Продукт", 1000, 1000, 1000);
 
 	// Создаем массив продуктов
 	Product products1[] = {
