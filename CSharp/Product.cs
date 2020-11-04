@@ -11,9 +11,11 @@ namespace Lab
         private double _price; // Цена
 
         // Статическая функция, возвращающая стандартный продукт
-        public static Product Default()
+        public static Product Default
         {
-            return new Product("Продукт", 1000, 1000, 1000);
+            get {
+                return new Product("Продукт", 1000, 1000, 1000);
+            }
         }
 
         public String Name
@@ -67,7 +69,7 @@ namespace Lab
         // Конструктор класса по умолчанию (без параметров)
         public Product()
         {
-            Product _default = Product.Default();
+            Product _default = Product.Default;
             _name = _default.Name;
             _weight = _default.Weight;
             _volume = _default.Volume;

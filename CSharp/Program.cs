@@ -17,7 +17,7 @@ namespace Lab
 
         // Пример функции с out
         public static void OutFunction(out Product prod) {
-            prod = Product.Default(); // Инициализируем prod
+            prod = Product.Default; // Инициализируем prod
         }
 
 
