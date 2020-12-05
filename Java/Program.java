@@ -32,6 +32,22 @@ public class Program {
             products1 = list.toArray(new Product[list.size()]);
         }
 
+        // Двумерный массив
+        int _n = 2, _m = 3;
+        Product[][] productsTwoMerniy = new Product[][]
+        {
+            { new Product("Хлеб", 250, 1, 30), new Product("Масло", 250, 1, 30), new Product("Сыр", 250, 1, 30) },
+            { new Product("Яйца", 250, 1, 30), new Product("Молоко", 250, 1, 30), new Product("Соль", 250, 1, 30) }
+        };
+        for (int i = 0; i < _n; i++)
+        {
+            for (int j = 0; j < _m; j++)
+            {
+                productsTwoMerniy[i][j].Display();
+            }
+            System.out.println();
+        }
+
         // Возврат целочисленного значения из метода через вспомогательный класс 
         Product bread = new Product("Хлеб", 250, 1 , 30); // Хлебушек
         var storageLife = bread.new StorageLife(LocalDate.now(), 10); // Cрок хранения в 10 дней
