@@ -56,6 +56,23 @@ namespace Lab
             }
         }
 
+        // Конструктор без параметров
+        public Food()
+        {
+            _name = "Без имени";
+            _price = 1;
+            _difficult = 1;
+        }
+
+        // Конструктор с одним параметром
+        public Food(string name)
+        {
+            _name = name;
+            _price = 1;
+            _difficult = 1;
+        }
+
+
         // Конструктор класса
         public Food(String name, double price, int difficult)
         {

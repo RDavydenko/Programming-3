@@ -76,6 +76,16 @@ namespace Lab
             _price = _default.Price;
         }
 
+        // Конструктор класса с одним параметром
+        public Product(string name)
+        {
+            Product _default = Product.Default;
+            _name = name;
+            _weight = _default.Weight;
+            _volume = _default.Volume;
+            _price = _default.Price;
+        }
+
         // Конструктор класса с параметрами
         public Product(String name, double weight, double volume, double price)
         {

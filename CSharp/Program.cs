@@ -22,6 +22,20 @@ namespace Lab
 
 
         public static void Main(String[] args) {
+            // Вызов конструкторов
+            Product p100 = new Product();
+            Product p101 = new Product("Хлеб");
+            Product p102 = new Product("Хлеб", 100, 100, 20);
+            Food f100 = new Food();
+            Food f101 = new Food("Бутерброд");
+            Food f102 = new Food("Бутерброд", 100, 2);
+            // Инициализация массива конструктором по умолчанию (без параметров)
+            Product[] pArr100 = new Product[10];
+            for (int i = 0; i < 10; i++)
+            {
+                pArr100[i] = new Product();
+            }
+
             // Демонстрация работы с массивом продуктов
             // Создаем массив продуктов
             Product[] products1 = { new Product("Хлеб", 250, 1, 30), new Product("Масло", 50, 0.2, 20),
