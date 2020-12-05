@@ -265,7 +265,7 @@ public:
 	}
 
 	// Вывести информацию о продуктах, которые составляют блюдо
-	void AboutProducts()
+	void AboutProducts(int size)
 	{
 		if (_products == nullptr)
 		{
@@ -273,7 +273,6 @@ public:
 		}
 		else
 		{
-			int size = sizeof(_products);
 			for (int i = 0; i < size; i++)
 			{
 				cout << "Название: " << _products[i].get_name() << endl;
@@ -427,7 +426,7 @@ int main()
 	Food butter = Food("Бутерброд", products1);
 	butter.Display();
 	cout << endl;
-	butter.AboutProducts(); // Выводим информацию о продуктах, которые содерждатся в butter
+	butter.AboutProducts(4); // Выводим информацию о продуктах, которые содерждатся в butter
 
 	cout << "Заполните поля о продукте: " << endl;
 	// Статический метод. Позволяет нам выполнять какие-либо действия
