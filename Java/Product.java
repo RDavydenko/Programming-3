@@ -51,6 +51,15 @@ public class Product {
         _price = _default.get_price();
     }
 
+     // Конструктор с одним параметром
+     public Product(String name) {
+        Product _default = Product.Default;
+        _name = name;
+        _weight = _default.get_weight();
+        _volume = _default.get_volume();
+        _price = _default.get_price();
+    }
+
     // Конструктор с параметрами
     public Product(String name, double weight, double volume, double price) {
         _name = name;

@@ -24,6 +24,20 @@ class Food {
         return this._products;
     }
 
+     // Конструктор класса без параметров
+     public Food() {
+        _name = "Без имени";
+        _price = 1;
+        _difficult = 1;
+    }
+
+     // Конструктор класса с одним параметром
+     public Food(String name) {
+        _name = name;
+        _price = 1;
+        _difficult = 1;
+    }
+
     // Конструктор класса
     public Food(String name, double price, int difficult) {
         _name = name;
