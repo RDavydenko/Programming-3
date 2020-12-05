@@ -443,6 +443,25 @@ int main()
 	cout << endl;
 	butter.AboutProducts(4); // Выводим информацию о продуктах, которые содерждатся в butter
 
+	// Двумерный массив
+	Product productsTwoMerniy[2][3];
+	productsTwoMerniy[0][0] = Product("Хлеб", 250, 1, 30);
+	productsTwoMerniy[0][1] = Product("Масло", 250, 1, 30);
+	productsTwoMerniy[0][2] = Product("Сыр", 250, 1, 30);
+
+	productsTwoMerniy[1][0] = Product("Яйца", 250, 1, 30);
+	productsTwoMerniy[1][1] = Product("Молоко", 250, 1, 30);
+	productsTwoMerniy[1][2] = Product("Соль", 250, 1, 30);
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			productsTwoMerniy[i][j].Display();
+		}
+		cout << endl;
+	}
+	
+
 	cout << "Заполните поля о продукте: " << endl;
 
 	try
