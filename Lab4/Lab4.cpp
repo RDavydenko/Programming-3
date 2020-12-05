@@ -101,6 +101,11 @@ public:
 			cin >> *weightPtr;
 		} while (*weightPtr == 0);
 
+		if (*weightPtr < 0)
+		{
+			throw -1;
+		}
+
 		double* volumePtr = (double*)malloc(sizeof(double));
 		do
 		{
@@ -108,12 +113,22 @@ public:
 			cin >> *volumePtr;
 		} while (*volumePtr == 0);
 
+		if (*weightPtr < 0)
+		{
+			throw -2;
+		}
+
 		double* pricePtr = (double*)malloc(sizeof(double));
 		do
 		{
 			cout << "Введите цену: ";
 			cin >> *pricePtr;
 		} while (*pricePtr == 0);
+
+		if (*weightPtr < 0)
+		{
+			throw -3;
+		}
 
 		return Product(name, *weightPtr, *volumePtr, *pricePtr);
 	}
@@ -265,7 +280,7 @@ public:
 	}
 
 	// Вывести информацию о продуктах, которые составляют блюдо
-	void AboutProducts()
+	void AboutProducts(int size)
 	{
 		if (_products == nullptr)
 		{
@@ -273,7 +288,6 @@ public:
 		}
 		else
 		{
-			int size = sizeof(_products);
 			for (int i = 0; i < size; i++)
 			{
 				cout << "Название: " << _products[i].get_name() << endl;
@@ -427,9 +441,22 @@ int main()
 	Food butter = Food("Бутерброд", products1);
 	butter.Display();
 	cout << endl;
-	butter.AboutProducts(); // Выводим информацию о продуктах, которые содерждатся в butter
+	butter.AboutProducts(4); // Выводим информацию о продуктах, которые содерждатся в butter
 
 	cout << "Заполните поля о продукте: " << endl;
+
+	try
+	{
+		Product pTest = Product::ReadFromInput();
+	}
+	catch (int a)
+	{
+		cout << "Произошла ошибка номер ";
+		printf("%d\n", a);
+	}
+
+
+	cout << "\nЗаполните поля о продукте: " << endl;
 	// Статический метод. Позволяет нам выполнять какие-либо действия
 	// без создания экземпляра класса. В данном случае статический метод
 	// создает экземпляр класса путем ввода данных с клавиатуры
