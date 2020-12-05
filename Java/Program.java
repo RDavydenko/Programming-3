@@ -47,10 +47,16 @@ public class Program {
         butter.AboutProducts(); // Выводим информацию о продуктах, которые содерждатся в butter
 
         System.out.println("Заполните поля о продукте: ");
-        // Статический метод. Позволяет нам выполнять какие-либо действия
-        // без создания экземпляра класса. В данном случае статический метод
-        // создает экземпляр класса путем ввода данных с клавиатуры
-        Product prod = Product.ReadFromInput();
+        Product prod = Product.Default;
+
+        try {
+            // Статический метод. Позволяет нам выполнять какие-либо действия
+            // без создания экземпляра класса. В данном случае статический метод
+            // создает экземпляр класса путем ввода данных с клавиатуры
+            prod = Product.ReadFromInput();
+        } catch (Exception e) {
+            System.out.println("Возникла ошибка: " + e.getMessage());   
+        }        
 
         // Инициализируем экземпляры классов с помощью конструкторов
         Product p1 = new Product("Картошка", 10500, 3, 300);
@@ -94,9 +100,13 @@ public class Program {
         Product[] productsArray = new Product[n];
         for (int i = 0; i < n; i++) {
             System.out.printf("Введите %d продукт из %d\n", i + 1, n);
-            Product pr = Product.ReadFromInput();
-            productsArray[i] = pr;
-            System.out.println();
+            try {
+                Product pr = Product.ReadFromInput();
+                productsArray[i] = pr;
+                System.out.println();                
+            } catch (Exception e) {
+                productsArray[i] = Product.Default;
+            }
         }
 
         // Готовим блюдо из введенных продуктов

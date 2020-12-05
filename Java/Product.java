@@ -78,7 +78,7 @@ public class Product {
     }
 
     // Считываем информацию с клавиатуры и создаем новый экзмепляр Продукта
-    public static Product ReadFromInput() {
+    public static Product ReadFromInput() throws Exception {
         String name;
         Scanner in = new Scanner(System.in, "Cp866");
         do {
@@ -93,6 +93,11 @@ public class Product {
                 weight = in.nextDouble();
             }
         } while (weight == 0);
+        
+        if (weight < 0)
+        {
+            throw new Exception("Вес не может быть отрицательным!");
+        }
 
         double volume = 0;
         do {
@@ -102,6 +107,11 @@ public class Product {
             }
         } while (volume == 0);
 
+        if (volume < 0) 
+        {
+            throw new Exception("Объем не может быть отрицательным!");
+        }
+
         double price = 0;
         do {
             System.out.print("Введите цену: ");
@@ -109,6 +119,11 @@ public class Product {
                 price = in.nextDouble();
             }
         } while (price == 0);
+
+        if (price < 0) 
+        {
+            throw new Exception("Цена не может быть отрицательной!");
+        }
 
         return new Product(name, weight, volume, price);
     }
