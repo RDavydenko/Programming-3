@@ -122,6 +122,11 @@ namespace Lab
                 double.TryParse(Console.ReadLine(), out weight);
             } while (weight == 0);
 
+            if (weight < 0) 
+            {
+                throw new Exception("Вес не может быть отрицательным!");
+            }
+
             double volume = 0;
             do
             {
@@ -129,12 +134,22 @@ namespace Lab
                 double.TryParse(Console.ReadLine(), out volume);
             } while (volume == 0);
 
+             if (volume < 0) 
+            {
+                throw new Exception("Объем не может быть отрицательным!");
+            }
+
             double price = 0;
             do
             {
                 Console.Write("Введите цену: ");
                 double.TryParse(Console.ReadLine(), out price);
             } while (price == 0);
+
+            if (price < 0) 
+            {
+                throw new Exception("Цена не может быть отрицательной!");
+            }
 
             return new Product(name, weight, volume, price);
         }

@@ -55,6 +55,17 @@ namespace Lab
             Console.WriteLine();
             butter.AboutProducts(); // Выводим информацию о продуктах, которые содерждатся в butter
 
+            try
+            {
+                 Console.WriteLine("Заполните поля о продукте: ");
+                Product pTest = Product.ReadFromInput();
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine($"Возникла ошибка: {ex.Message}\n");
+            }
+
+
             Console.WriteLine("Заполните поля о продукте: ");
             // Статический метод. Позволяет нам выполнять какие-либо действия
             // без создания экземпляра класса. В данном случае статический метод
