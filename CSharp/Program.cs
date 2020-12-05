@@ -48,6 +48,21 @@ namespace Lab
             products1 =  productsList.ToArray();
             var sumWeight = products1.Sum(x => x.Weight); // Считаем общий вес
             Console.WriteLine($"Общий вес всех продуктов {sumWeight}\n");
+            
+            // Двумерный массив
+            Product[,] productsTwoMerniy = new Product[,]
+            {
+                { new Product("Хлеб", 250, 1, 30), new Product("Масло", 250, 1, 30), new Product("Сыр", 250, 1, 30) },
+                { new Product("Яйца", 250, 1, 30), new Product("Молоко", 250, 1, 30), new Product("Соль", 250, 1, 30) }
+            };
+            for (int i = 0; i < productsTwoMerniy.GetLength(0); i++)
+            {
+                for (int j = 0; j < productsTwoMerniy.GetLength(1); j++)
+                {
+                    productsTwoMerniy[i,j].Display();
+                }
+                Console.WriteLine();
+            }
 
             // Создаем бутерброд из продуктов
             Food butter = new Food("Бутерброд", products1);
