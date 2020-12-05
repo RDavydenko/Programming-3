@@ -13,8 +13,11 @@ private:
 	double _price; // Цена
 
 public:
-	// Статический метод, возвращающий стандартный продукт
-	static Product Default;	
+	// Статическая функция, возвращающая стандартный продукт
+	static Product Default()
+	{
+		return Product("Продукт", 1000, 1000, 1000);
+	}
 
 public:
 	string get_name() { return this->_name; }
@@ -27,8 +30,18 @@ public:
 	// Конструктор класса по умолчанию (без параметров)
 	Product()
 	{
-		Product _default = Product::Default;
+		Product _default = Product::Default();
 		_name = _default.get_name();
+		_weight = _default.get_weight();
+		_volume = _default.get_volume();
+		_price = _default.get_price();
+	}
+
+	// Конструктор с одним параметром
+	Product(string name) 
+	{
+		Product _default = Product::Default();
+		_name = name;
 		_weight = _default.get_weight();
 		_volume = _default.get_volume();
 		_price = _default.get_price();
@@ -41,6 +54,24 @@ public:
 		_weight = weight;
 		_volume = volume;
 		_price = price;
+	}
+
+	// Конструктор копирования
+	Product(const Product& prod)
+	{
+		cout << "\nКонструктор копирования\n";
+	}
+
+	// Перегрузка оператора присваивания
+	Product& operator= (const Product& prod)
+	{
+		// Выполняем копирование значений
+		_name = prod._name;
+		_weight = prod._weight;
+		_volume = prod._volume;
+		_price = prod._price;
+		
+		return *this;
 	}
 
 	// Вывести информацию на экран
@@ -164,6 +195,22 @@ public:
 	Product* get_products() { return this->_products; }
 
 public:
+	// Конструктор класса без параметров
+	Food()
+	{
+		_name = "Без имени";
+		_price = 1;
+		_difficult = 1;
+	}
+
+	// Конструктор класса с одним параметром
+	Food(string name)
+	{
+		_name = name;
+		_price = 1;
+		_difficult = 1;
+	}
+
 	// Конструктор класса
 	Food(string name, double price, int difficult)
 	{
@@ -354,8 +401,20 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	system("cls");
 
-	// Инициализируем статическое поле 
-	Product::Default = Product("Продукт", 1000, 1000, 1000);
+	// Использование конструкторов
+	Product p100 = Product();
+	Product p101 = Product("Хлеб");
+	Product p102 = Product("Хлеб", 100, 1000, 20);
+	Food f100 = Food();
+	Food f101 = Food("Бутерброд");
+	Food f102 = Food("Бутеброд", 100, 2);
+
+	// Инициализация массива с помощью конструктора по умолчанию
+	Product pArr100[10];
+	for (int i = 0; i < 10; i++)
+	{
+		pArr100[i] = Product();
+	}
 
 	// Создаем массив продуктов
 	Product products1[] = {
