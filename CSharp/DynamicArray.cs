@@ -37,6 +37,18 @@ namespace Lab
             return _array[index];
         }
 
+         // Установить элемент по индексу
+        public void SetByIndex(int index, T element) {
+            _array[index] = element;
+        }
+
+        // Доступ по индексу (как к массива)
+        public T this[int index]
+        {
+            get { return _array[index]; }
+            set { _array[index] = value; }
+        }
+
         // Количество элементов массива
         public int GetCount() {
             return _count;
