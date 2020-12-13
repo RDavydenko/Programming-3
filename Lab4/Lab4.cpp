@@ -538,6 +538,64 @@ public:
 	}
 };
 
+// Шаблон класса - динамический массив
+template <typename T>
+class DynamicArray {
+private:
+	T* _array;
+	int _count = 0;
+	int _capacity = 0;
+public:
+	// Конструктор без параметров
+	DynamicArray()
+	{
+		_array = new T[2];
+		_capacity = 2;
+	}
+
+	// capacity - начальная ёмкость
+	DynamicArray(int capacity)
+	{
+		_array = new T[capacity];
+		_capacity = capacity;
+	}
+
+	// Добавить новый элемент
+	void add(T element)
+	{
+		// Если достигли предела, то увеличиваем массив в 2 раза
+		if (_count + 1 >= _capacity)
+		{
+			_capacity *= 2;
+			_array = restructArray(_capacity);
+		}
+		_array[_count] = element;
+		_count++;
+	}
+
+	// Получить элемент по индексу
+	T getByIndex(int index) {
+		return _array[index];
+	}
+
+	// Количество элементов массива
+	int getCount()
+	{
+		return _count;
+	}
+
+private:
+	T* restructArray(int count)
+	{
+		T* newArray = new T[count];
+		for (int i = 0; i < _count; i++)
+		{
+			newArray[i] = _array[i];
+		}
+		return newArray;
+	}
+};
+
 // Дружественная функция
 void Rename(Food& food, string name) {
 	food._name = name;
@@ -548,6 +606,17 @@ int main()
 	system("chcp 1251");
 	setlocale(LC_ALL, "Russian");
 	system("cls");
+
+	// Демонстрация работы шаблона класса, например, для типа int
+	DynamicArray<int> list = DynamicArray<int>();
+	for (int i = 0; i < 100; i++)
+	{
+		list.add(i);
+	}
+	for (int i = 0; i < list.getCount(); i++)
+	{
+		cout << list.getByIndex(i) << endl;
+	}
 
 	Meat child = Meat();
 	Product& rParent = child;
