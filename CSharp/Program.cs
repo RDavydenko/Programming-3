@@ -22,6 +22,17 @@ namespace Lab
 
 
         public static void Main(String[] args) {
+            // Демонстрация работы шаблона класса, например, для типа int
+            DynamicArray<int> dynamicList = new DynamicArray<int>();
+            for (int i = 0; i < 100; i++)
+            {
+                dynamicList.Add(i);
+            }
+            for (int i = 0; i < dynamicList.GetCount(); i++)
+            {
+                Console.WriteLine(dynamicList.GetByIndex(i));
+            }
+
             // Вызов конструкторов
             Product p100 = new Product();
 
