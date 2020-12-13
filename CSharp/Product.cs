@@ -3,12 +3,14 @@ using System;
 namespace Lab
 {
     // Продукт (пищевой)
-    public class Product
+    public class Product : Item, IDisplayable
     {
-        private String _name; // Название
+        protected String _name; // Название // Модификатор доступа protected
         private double _weight; // Вес
         private double _volume; // Объем
         private double _price; // Цена
+
+        public Thing clonedThing;
 
         // Статическое поле, возвращающее стандартный продукт
         public static Product Default
@@ -18,13 +20,13 @@ namespace Lab
             }
         }
 
-        public String Name
+        public override String Name
         {
             get
             {
                 return this._name;
             }
-            private set
+            set
             {
                 _name = value;
             }
@@ -67,18 +69,20 @@ namespace Lab
         }
 
         // Конструктор класса по умолчанию (без параметров)
-        public Product()
+        public Product() : base("Без имени")
         {
             Product _default = Product.Default;
-            _name = _default.Name;
+            Name = _default.Name;
             _weight = _default.Weight;
             _volume = _default.Volume;
             _price = _default.Price;
         }
 
         // Конструктор класса с одним параметром
-        public Product(string name)
+        public Product(string name) : base(name)
         {
+            clonedThing = new Thing() { Str = name };
+
             Product _default = Product.Default;
             _name = name;
             _weight = _default.Weight;
@@ -87,12 +91,13 @@ namespace Lab
         }
 
         // Конструктор класса с параметрами
-        public Product(String name, double weight, double volume, double price)
+        public Product(String name, double weight, double volume, double price, Thing t = null) : base(name)
         {
             _name = name;
             _weight = weight;
             _volume = volume;
             _price = price;
+            clonedThing = t;
         }
 
         // Вывести информацию на экран
@@ -103,6 +108,18 @@ namespace Lab
             Console.Write("Вес:  {0}\n", this._weight);
             Console.Write("Объем: {0}\n", this._volume);
             Console.Write("Цена: {0}\n", this._price);
+        }
+        
+        // Перегруза оператора ToString()
+        public override string ToString() 
+        {
+            var res = string.Empty;
+            res += "Информация о продукте\n";
+            res += string.Format("Название: {0}\n", this._name);
+            res += string.Format("Вес:  {0}\n", this._weight);
+            res += string.Format("Объем: {0}\n", this._volume);
+            res += string.Format("Цена: {0}\n", this._price);
+            return res;
         }
 
         // Ввести с клавиатуры информацию о продукте
@@ -173,7 +190,7 @@ namespace Lab
         }
 
         // Расчет эффективности продукта
-        public double GetEfficiencyProduct()
+        public virtual double GetEfficiencyProduct()
         {
             double averageCalorie = 200;
             double priceByGramm = GetPriceByGramm();
@@ -187,6 +204,21 @@ namespace Lab
             double density = this._weight / this._volume; // Плотность
             return density;
         }
+        
+        // Мелкое клонировние
+        public Product Clone()
+        {
+            return new Product(_name, _weight, _volume, _price, clonedThing);
+        }
+
+        // Глубокое клонирование
+        public Product DeepClone()
+        {
+            // Создаем новый, т.к. класс - это тип ссылочный
+            var clonedTh = new Thing() { Str = clonedThing.Str };
+
+            return new Product(_name, _weight, _volume, _price, clonedTh);
+        }
 
         // Перегрузка оператора +
         public static Product operator +(Product p1, Product p2)
@@ -199,6 +231,11 @@ namespace Lab
         public static Product operator ++(Product x)
         {
             return new Product(x.Name, x.Weight * 2, x.Volume * 2, x.Price * 2);
-        }
+        }        
+    }
+
+    public class Thing
+    {
+        public string Str { get; set; }
     }
 }

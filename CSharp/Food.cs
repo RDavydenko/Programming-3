@@ -3,7 +3,7 @@ using System;
 namespace Lab
 {
     // Блюдо (приготовленное из продуктов)
-    public class Food
+    public class Food : IDisplayable
     {
         private String _name; // Название
         private double _price; // Цена
@@ -123,6 +123,17 @@ namespace Lab
             Console.Write("Название: {0}\n", this._name);
             Console.Write("Цена:  {0}\n", this._price);
             Console.Write("Сложность: {0}\n", this._difficult);
+        }
+
+        // Перегруза оператора ToString()
+        public override string ToString() 
+        {
+            var res = string.Empty;
+            res += string.Format("Информация о блюде\n");
+            res += string.Format("Название: {0}\n", this._name);
+            res += string.Format("Цена:  {0}\n", this._price);
+            res += string.Format("Сложность: {0}\n", this._difficult);
+            return res;
         }
 
         // Вывести информацию о продуктах, которые составляют блюдо

@@ -24,6 +24,23 @@ namespace Lab
         public static void Main(String[] args) {
             // Вызов конструкторов
             Product p100 = new Product();
+
+            Console.WriteLine(p100); // Будет использоваться перегруженный метод ToString()
+            Item abstractItem = p100; // Абстрактный класс
+            Console.WriteLine($"Available only property Name: {abstractItem.Name}"); // Доступно только свойство Name абстрактного класса
+            IDisplayable interfaceItem = p100; // Интерфейс
+            interfaceItem.Display(); // Для интерфейса доступен только этот метод Diplay()
+
+            string name = "Пирожок";
+            Product baseProd = new Product(name);
+            var easyClon = baseProd.Clone(); // Мелкое клонирование
+            var deepClon = baseProd.DeepClone(); // Глубокое клонирование
+            baseProd.clonedThing.Str = "Edited"; // easyClon.clonedThing.Str тоже изменится
+            Console.WriteLine($"Parent: {baseProd.clonedThing.Str} | EasyClon: {easyClon.clonedThing.Str}"); // easyClon.clonedThing.Str изменилось
+            Console.WriteLine($"Parent: {baseProd.clonedThing.Str} | DeepClon: {deepClon.clonedThing.Str}"); // deepClon.clonedThing.Str не изменится
+
+            Console.ReadKey();
+
             Product p101 = new Product("Хлеб");
             Product p102 = new Product("Хлеб", 100, 100, 20);
             Food f100 = new Food();
