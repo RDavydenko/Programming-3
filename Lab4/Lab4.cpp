@@ -404,6 +404,15 @@ public:
 		cout << "Сложность: " << this->_difficult << endl;
 	}
 
+	// Перегрузка оператора <<
+	friend ostream& operator<<(ostream& os, const Food& p) {
+		os << "Информация о блюде" << "\n" <<
+			"Название: " << p._name << "\n" <<
+			"Цена:  " << p._price << "\n" <<
+			"Сложность: " << p._difficult << "\n";
+		return os;
+	}
+
 	// Вывести информацию о продуктах, которые составляют блюдо
 	void AboutProducts(int size)
 	{
