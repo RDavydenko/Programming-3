@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 // Блюдо (приготовленное из продуктов)
-class Food {
+class Food extends Item implements Displayable {
     private String _name; // Название
     private double _price; // Цена
     private int _difficult; // Сложность
@@ -76,6 +76,19 @@ class Food {
         System.out.printf("Цена:  %g\n", this._price);
         System.out.printf("Сложность: %d\n", this._difficult);
     }
+
+    // Метод toString() вместо Display()
+    @Override
+    public String toString()
+    {
+        var res = "";
+        res += String.format("Информация о блюде\n");
+        res += String.format("Название: %s\n", this._name);
+        res += String.format("Цена:  %g\n", this._price);
+        res += String.format("Сложность: %d\n", this._difficult);
+        return res;
+    }
+
 
     // Вывести информацию о продуктах, которые составляют блюдо
     public void AboutProducts() {

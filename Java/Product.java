@@ -3,12 +3,13 @@ import java.time.Period;
 import java.util.Scanner;
 
 // Продукт
-public class Product {
-    private String _name; // Название
+public class Product extends Item implements Displayable {
+    protected String _name; // Название // Модификатор доступа protected
     private double _weight; // Вес
     private double _volume; // Объем
     private double _price; // Цена
     private StorageLife _storageLife = null; // Срок хранения
+    public Product.Thing clonedThing;
 
     // Дефолтный экземпляр класса Продукт
     public static Product Default = new Product("Безымянный", 1000, 1000, 1000);
@@ -75,6 +76,19 @@ public class Product {
         System.out.printf("Вес:  %g\n", this._weight);
         System.out.printf("Объем: %g\n", this._volume);
         System.out.printf("Цена: %g\n", this._price);
+    }
+
+    // Метод toString() вместо Display()
+    @Override
+    public String toString()
+    {
+        var res = "";
+        res += String.format("Информация о продукте:\n");
+        res += String.format("Название: %s\n", this._name);
+        res += String.format("Вес:  %g\n", this._weight);
+        res += String.format("Объем: %g\n", this._volume);
+        res += String.format("Цена: %g\n", this._price);
+        return res;
     }
 
     // Считываем информацию с клавиатуры и создаем новый экзмепляр Продукта
@@ -157,6 +171,30 @@ public class Product {
         return density;
     }
 
+    // Мелкое клонировние
+    public Product Clone()
+    {
+       var n =  new Product(_name, _weight, _volume, _price);
+       n.clonedThing = clonedThing;
+       return n;
+    }
+
+    // Глубокое клонирование
+    public Product DeepClone()
+    {
+        // Создаем новый, т.к. класс - это тип ссылочный
+        var clonedTh = new Thing();
+        clonedTh.Str = clonedThing.Str;
+        var n = new Product(_name, _weight, _volume, _price);
+        n.clonedThing = clonedTh;
+        return n;
+    }
+
+    public class Thing
+    {
+        public String Str;
+    }
+
     // Срок годности
     public class StorageLife {
         private LocalDate startDate; // Начальная дата
@@ -184,6 +222,6 @@ public class Product {
         public int getStorageLifeInDays() {
             Period period = Period.between(startDate, endDate);
             return period.getDays();
-        }   
+        }       
     }
 }

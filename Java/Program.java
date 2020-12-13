@@ -9,6 +9,23 @@ public class Program {
         Product p100 = new Product();
         Product p101 = new Product("Хлеб");
         Product p102 = new Product("Хлеб", 100, 100, 20);
+
+        Item abstractItem = p100; // Абстрактный класс
+        abstractItem.get_name(); // Доступен только метод, определенный в абстрактном классе - get_name()
+        Displayable displayableItem = p101; // Интерфейс
+        displayableItem.Display(); // Доступен метод, определенный в интерфейсе - Display()
+
+        String name = "Пирожок";
+        Product baseProd = new Product(name);
+        var thing = baseProd.new Thing();
+        thing.Str = name;
+        baseProd.clonedThing = thing;
+        var easyClon = baseProd.Clone(); // Мелкое клонирование
+        var deepClon = baseProd.DeepClone(); // Глубокое клонирование
+        baseProd.clonedThing.Str = "Edited"; // easyClon.clonedThing.Str тоже изменится
+        System.out.printf("Parent: %s | EasyClon: %s\n", baseProd.clonedThing.Str, easyClon.clonedThing.Str); // easyClon.clonedThing.Str изменилось
+        System.out.printf("Parent: %s | DeepClon: %s\n", baseProd.clonedThing.Str ,deepClon.clonedThing.Str); // deepClon.clonedThing.Str не изменится
+
         Food f100 = new Food();
         Food f101 = new Food("Бутерброд");
         Food f102 = new Food("Бутерброд", 100, 2);
