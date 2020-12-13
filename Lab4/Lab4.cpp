@@ -3,15 +3,36 @@
 #include <locale.h>
 using namespace std;
 
+// Абстрактный класс Item
+class Item
+{
+protected:
+	string _name;
+
+	// Мы сделали этот конструктор protected так как не хотим, чтобы пользователи могли создавать объекты класса Item напрямую,
+	// но хотим, чтобы эта возможность оставалась в дочерних классах
+	Item()
+		: _name("Без имени")
+	{
+	}
+
+	Item(string name)
+		: _name(name)
+	{
+	}
+
+public:
+	virtual string get_name() { return _name; }
+};
 
 // Продукт (пищевой)
-class Product {
-private:
+class Product 
+	: public Item {
+protected: // Модификатор доступа protected
 	string _name;  // Название
 	double _weight; // Вес
 	double _volume; // Объем
 	double _price; // Цена
-
 public:
 	// Статическая функция, возвращающая стандартный продукт
 	static Product Default()
@@ -20,7 +41,8 @@ public:
 	}
 
 public:
-	string get_name() { return this->_name; }
+	// Виртуальная функция
+	virtual string get_name() { return this->_name; }
 	double get_weight() { return this->_weight; }
 	double get_volume() { return this->_volume; }
 	double get_price() { return this->_price; }
@@ -28,7 +50,7 @@ public:
 public:
 
 	// Конструктор класса по умолчанию (без параметров)
-	Product()
+	Product() : Item()
 	{
 		Product _default = Product::Default();
 		_name = _default.get_name();
@@ -38,7 +60,7 @@ public:
 	}
 
 	// Конструктор с одним параметром
-	Product(string name) 
+	Product(string name) : Item(name)
 	{
 		Product _default = Product::Default();
 		_name = name;
@@ -48,7 +70,7 @@ public:
 	}
 
 	// Конструктор класса с параметрами
-	Product(string name, double weight, double volume, double price)
+	Product(string name, double weight, double volume, double price) : Item(name)
 	{
 		_name = name;
 		_weight = weight;
@@ -74,6 +96,21 @@ public:
 		return *this;
 	}
 
+	// Должно выглядеть так, но из-за того, что Meat объявлен ниже, его не видит компилятор
+	// А выше объявить тоже не могу, т.к. не получится наследоваться по той же причине, только не будет видеть уже класс Product
+	// Перегрузка оператора присваивания класса-наследника
+	//Product& operator=(const Meat& prod)
+	//{
+	//	// Выполняем копирование значений
+	//	_name = "Мясо";
+	//	_weight = prod._weight;
+	//	_volume = prod._volume;
+	//	_price = prod._price;
+
+	//	return *this;
+	//}
+
+
 	// Вывести информацию на экран
 	void Display()
 	{
@@ -82,6 +119,16 @@ public:
 		cout << "Вес:  " << this->_weight << endl;
 		cout << "Объем: " << this->_volume << endl;
 		cout << "Цена: " << this->_price << endl;
+	}
+
+	// Перегрузка оператора <<
+	friend ostream& operator<<(ostream& os, const Product& p) {
+		os << "Информация о продукте" << "\n" <<
+			"Название: " << p._name << "\n" <<
+			"Вес:  " << p._weight << "\n" <<
+			"Объем: " << p._volume << "\n" <<
+			"Цена: " << p._price << "\n";
+		return os;
 	}
 
 	// Ввести с клавиатуры информацию о продукте
@@ -191,6 +238,84 @@ public:
 		this->_weight *= 2;
 
 		return prev;
+	}
+};
+
+// Мясо (наследуется от продукта)
+class Meat : public Product
+{
+public:
+	// Виртуальная функция
+	virtual string get_name() { return "Мясо"; }
+
+	// Вызов конструктора базового класса
+	Meat() : Product("Мясо")
+	{
+
+	}
+	// Вызов конструктора базового класса
+	Meat(double weight, double volume, double price) : Product("Мясо", weight, volume, price)
+	{
+
+	}
+
+	// Ввести с клавиатуры информацию о мясе
+	// Этот метод переопределяет базовый метод ReadFromInput() в классе-родителе
+	static Meat ReadFromInput()
+	{
+		double* weightPtr = (double*)malloc(sizeof(double));
+		do
+		{
+			cout << "Введите вес: ";
+			cin >> *weightPtr;
+		} while (*weightPtr == 0);
+
+		if (*weightPtr < 0)
+		{
+			throw - 1;
+		}
+
+		double* volumePtr = (double*)malloc(sizeof(double));
+		do
+		{
+			cout << "Введите объем: ";
+			cin >> *volumePtr;
+		} while (*volumePtr == 0);
+
+		if (*weightPtr < 0)
+		{
+			throw - 2;
+		}
+
+		double* pricePtr = (double*)malloc(sizeof(double));
+		do
+		{
+			cout << "Введите цену: ";
+			cin >> *pricePtr;
+		} while (*pricePtr == 0);
+
+		if (*weightPtr < 0)
+		{
+			throw - 3;
+		}
+
+		// Переменная name не используется, т.к. она определена константой "Мясо"
+		return Meat(*weightPtr, *volumePtr, *pricePtr);
+	}
+
+public:
+	// Пожарить
+	void Fry()
+	{
+		// Имеем доступ к _name, потому что оно protected в базовом классе
+		// Если бы было private, то в классе-наследнике не была бы видна _name
+		cout << "Жарим " << _name << "... Пшш! *Шипит*" << endl;
+	}
+
+	// Отварить
+	void Cook()
+	{
+		cout << "Варим  " << _name << "... Буль-буль! *Бурлит*" << endl;
 	}
 };
 
@@ -415,10 +540,21 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	system("cls");
 
+	Meat child = Meat();
+	Product& rParent = child;
+	// Если функция виртуальная, то мы увидим метод из дочернего класса
+	// Если не виртуальная, то из класса-родителя
+	cout << "rParent is a " << rParent.get_name() << '\n';
+
 	// Использование конструкторов
 	Product p100 = Product();
 	Product p101 = Product("Хлеб");
 	Product p102 = Product("Хлеб", 100, 1000, 20);
+	cout << p102; // Применение перегрузки оператора <<
+
+	Item& abstractItem = p102; // Используем абстрактный класс
+	cout << "В абстрактном классе есть только свойство name: " << abstractItem.get_name() << endl;
+
 	Food f100 = Food();
 	Food f101 = Food("Бутерброд");
 	Food f102 = Food("Бутеброд", 100, 2);
