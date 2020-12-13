@@ -3,8 +3,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+@SuppressWarnings("unchecked")
 public class Program {
     public static void main(String[] args) {
+        // Демонстрация работы шаблона класса, например, для типа int
+        Integer a = 0;
+        DynamicArray<Integer> dynamicList = new DynamicArray<Integer>((Class<Integer>)a.getClass());
+        for (int i = 0; i < 100; i++)
+        {
+            dynamicList.add(i);
+        }
+        for (int i = 0; i < dynamicList.getCount(); i++)
+        {
+            System.out.println(dynamicList.getByIndex(i));
+        }
+
         // Вызов конструкторов
         Product p100 = new Product();
         Product p101 = new Product("Хлеб");
