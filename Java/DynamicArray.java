@@ -45,7 +45,6 @@ class DynamicArray<T> {
 
     private T[] restructArray(int count)
 	{
-        T t;
 		T[] newArray = (T[]) Array.newInstance(_class, count);
 		for (int i = 0; i < _count; i++)
 		{
