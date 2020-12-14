@@ -598,11 +598,6 @@ void Rename(Food& food, string name) {
 	food._name = name;
 }
 
-bool pred(Food i)
-{
-	return i.get_price();
-};
-
 int main()
 {
 	system("chcp 1251");
@@ -697,9 +692,9 @@ int main()
 		{
 			countOther++;
 		}
-	}
-	cout << "В векторе содержится " << countMeat << " мяса и " << countOther << " остальных продуктов" << endl;
+	}	
 
+	cout << "В векторе содержится " << countMeat << " мяса и " << countOther << " остальных продуктов" << endl;
 
 	// Демонстрация работы шаблона класса, например, для типа int
 	/*DynamicArray<int> list = DynamicArray<int>();
