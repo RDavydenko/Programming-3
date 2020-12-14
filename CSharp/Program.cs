@@ -22,16 +22,54 @@ namespace Lab
 
 
         public static void Main(String[] args) {
+            // Использование GenericCollections и Linq - аналоги STL и <algorithm> из C++
+            var list = new List<Product>() 
+            {
+                new Product("Хлеб"),
+                new Product("Сыр"),
+                new Product("Пшено"),
+                new Product("Яйцо"),
+                new Product("Гречка"),
+                new Product("Мука"),
+                new Product("Овёс"),
+                new Product("Булка"),
+                new Product("Лимон"),
+                new Product("Яблоко"),
+                new Meat(),
+                new Meat(),
+            };
+            foreach (var p in list)
+            {
+                Console.WriteLine($"{p.Name}");
+            }
+            var countMeat = list.Where(x => x.Name == "Мясо").Count();
+            Console.WriteLine($"\nНашли в списке {countMeat} элемента с названием \"Мясо\"\n");
+            var eggs = list.FirstOrDefault(x => x.Name.ToLower().Contains("яйц"));
+            if (eggs != null)
+            {
+                Console.WriteLine($"Нашли в списке {eggs.Name}\n");
+            }
+            else {
+                Console.WriteLine("Яиц в списке нет\n");
+            }
+            list.Sort((x,y) => string.Compare(x.Name, y.Name));
+            Console.WriteLine("Отсортированная по названию коллекция:");
+            foreach (var pr in list)
+            {
+                Console.WriteLine($"{pr.Name}");
+            }
+            Console.WriteLine();
+
             // Демонстрация работы шаблона класса, например, для типа int
-            DynamicArray<int> dynamicList = new DynamicArray<int>();
-            for (int i = 0; i < 100; i++)
-            {
-                dynamicList.Add(i);
-            }
-            for (int i = 0; i < dynamicList.GetCount(); i++)
-            {
-                Console.WriteLine(dynamicList.GetByIndex(i));
-            }
+            // DynamicArray<int> dynamicList = new DynamicArray<int>();
+            // for (int i = 0; i < 100; i++)
+            // {
+            //     dynamicList.Add(i);
+            // }
+            // for (int i = 0; i < dynamicList.GetCount(); i++)
+            // {
+            //     Console.WriteLine(dynamicList.GetByIndex(i));
+            // }
 
             // Вызов конструкторов
             Product p100 = new Product();
