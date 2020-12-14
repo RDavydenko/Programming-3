@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include <string>
 #include <locale.h>
+#include <list>
+#include <vector>
+#include <algorithm> 
 using namespace std;
 
 // Абстрактный класс Item
@@ -76,12 +79,6 @@ public:
 		_weight = weight;
 		_volume = volume;
 		_price = price;
-	}
-
-	// Конструктор копирования
-	Product(const Product& prod)
-	{
-		cout << "\nКонструктор копирования\n";
 	}
 
 	// Перегрузка оператора присваивания
@@ -601,14 +598,111 @@ void Rename(Food& food, string name) {
 	food._name = name;
 }
 
+bool pred(Food i)
+{
+	return i.get_price();
+};
+
 int main()
 {
 	system("chcp 1251");
 	setlocale(LC_ALL, "Russian");
 	system("cls");
 
+	// Работа с библиотекой STL и контейнерами
+	std::list<Food> listFood;
+	Food f01 = Food("Бутерброд", 50, 1);
+	Food f02 = Food("Яичница", 50, 2);
+	Food f03 = Food("Чай", 20, 1);
+	Food f04 = Food("Борщ", 100, 4);
+	Food f05 = Food("Мороженое", 40, 2);
+	Food f06 = Food("Коктейль", 80, 1);
+	Food f07 = Food("Кофе", 40, 1);
+	Food f08 = Food("Пирог", 200, 3);
+	Food f09 = Food("Пирожок", 50, 3);
+	Food f10 = Food("Салат", 80, 2);
+	listFood.push_back(f01);
+	listFood.push_back(f02);
+	listFood.push_back(f03);
+	listFood.push_back(f04);
+	listFood.push_back(f05);
+	listFood.push_back(f06);
+	listFood.push_back(f07);
+	listFood.push_back(f08);
+	listFood.push_back(f09);
+	listFood.push_back(f10);
+
+	std::list<Food>::const_iterator it; // объявляем итератор
+	for (it = listFood.begin(); it != listFood.end(); it++)
+	{
+		auto t = (*it);
+		cout << t.get_name() << endl;
+	}
+
+	reverse(listFood.begin(), listFood.end());
+	cout << "\nПервернутая:" << endl;
+	for (it = listFood.begin(); it != listFood.end(); it++)
+	{
+		auto t = (*it);
+		cout << t.get_name() << endl;
+	}
+
+	// Вектор
+	std::vector<Product> productsVector;
+	Product p01 = Product("Хлеб");
+	Product p02 = Product("Сыр");
+	Product p03 = Product("Пшено");
+	Product p04 = Product("Яйцо");
+	Product p05 = Product("Гречка");
+	Product p06 = Product("Мука");
+	Product p07 = Product("Овёс");
+	Product p08 = Product("Булка");
+	Product p09 = Product("Лимон");
+	Product p10 = Product("Яблоко");
+	Product m01 = Meat();
+	Product m02 = Meat();
+	productsVector.push_back(p01);
+	productsVector.push_back(p02);
+	productsVector.push_back(p03);
+	productsVector.push_back(p04);
+	productsVector.push_back(p05);
+	productsVector.push_back(p06);
+	productsVector.push_back(p07);
+	productsVector.push_back(p08);
+	productsVector.push_back(p09);
+	productsVector.push_back(p10);
+	productsVector.push_back(m01);
+	productsVector.push_back(m02);
+
+	std::vector<Product>::const_iterator it2; // объявляем итератор
+	cout << "\n";
+	for (it2 = productsVector.begin(); it2 != productsVector.end(); it2++)
+	{
+		auto t = (*it2);
+		cout << t.get_name() << endl;
+	}
+
+	int countMeat = 0;
+	int countOther = 0;
+	for (it2 = productsVector.begin(); it2 != productsVector.end(); it2++)
+	{
+		auto t = (*it2);
+		// Если это мясо
+		if (t.get_name() == "Мясо")
+		{
+			countMeat++;
+		}
+		// Если другой продукт (не мясо)
+		else
+		{
+			countOther++;
+		}
+	}
+	cout << "В векторе содержится " << countMeat << " мяса и " << countOther << " остальных продуктов" << endl;
+
+
 	// Демонстрация работы шаблона класса, например, для типа int
-	DynamicArray<int> list = DynamicArray<int>();
+	/*DynamicArray<int> list = DynamicArray<int>();
 	for (int i = 0; i < 100; i++)
 	{
 		list.add(i);
@@ -616,7 +710,7 @@ int main()
 	for (int i = 0; i < list.getCount(); i++)
 	{
 		cout << list.getByIndex(i) << endl;
-	}
+	}*/
 
 	Meat child = Meat();
 	Product& rParent = child;
