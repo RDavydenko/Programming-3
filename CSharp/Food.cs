@@ -137,7 +137,7 @@ namespace Lab
         }
 
         // Вывести информацию о продуктах, которые составляют блюдо
-        public void AboutProducts()
+        public void AboutProducts(Program.ProductAction doAct = null)
         {
             if (_products.Length == 0)
             {
@@ -147,6 +147,10 @@ namespace Lab
             {
                 for (int i = 0; i < _products.Length; i++)
                 {
+                    if (doAct != null)
+                    {
+                        doAct(_products[i]);
+                    }
                     Console.Write("Название: {0}\n", _products[i].Name);
                     Console.Write("Вес: {0}\n", _products[i].Weight);
                     Console.Write("Объем: {0}\n", _products[i].Volume);

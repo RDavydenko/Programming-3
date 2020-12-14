@@ -20,8 +20,17 @@ namespace Lab
             prod = Product.Default; // Инициализируем prod
         }
 
+        // Объявление делегата - принимает Product, возвращает void
+        public delegate void ProductAction(Product p);
 
         public static void Main(String[] args) {
+            // Работа с делегатом
+            Food fTest = new Food("Бутерброд", new Product[] {new Product("Хлеб", 40, 200, 200), new Product("Колбаса", 100, 100, 100)});
+            // Лямбда по типу делегата
+            fTest.AboutProducts((product) => {
+                Console.WriteLine($"Действие из делегата. Имя продукта: {product.Name}");
+            });
+
             // Демонстрация работы шаблона класса, например, для типа int
             DynamicArray<int> dynamicList = new DynamicArray<int>();
             for (int i = 0; i < 100; i++)
