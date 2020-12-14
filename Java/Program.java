@@ -6,6 +6,58 @@ import java.util.Scanner;
 @SuppressWarnings("unchecked")
 public class Program {
     public static void main(String[] args) {
+        // Коллекции (контейнеры аля STL)
+        ArrayList<Product> prodList = new ArrayList<Product>();
+        // Заполнение
+        prodList.add(new Product("Хлеб"));
+        prodList.add(new Product("Сыр"));
+        prodList.add(new Product("Пшено"));
+        prodList.add(new Product("Яйцо"));
+        prodList.add(new Product("Гречка"));
+        prodList.add(new Product("Мука"));
+        prodList.add(new Product("Овёс"));
+        prodList.add(new Product("Булка"));
+        prodList.add(new Product("Лимон"));
+        prodList.add(new Product("Яблоко"));
+        prodList.add(new Meat());
+        prodList.add(new Meat());
+        // Обход
+        var it = prodList.listIterator();
+        while(it.hasNext())
+        {
+            var t = it.next();
+            System.out.println(t.get_name());
+        }
+        // Сортировка
+        prodList.sort((x,y) -> x.get_name().compareTo(y.get_name()));
+        System.out.println("\nПосле сортировки по названию:");
+        // Обход после сортировки
+        var it2 = prodList.listIterator();
+        while(it2.hasNext())
+        {
+            var t = it2.next();
+            System.out.println(t.get_name());
+        }
+        // Поиск
+        var finded = false;
+        var it3 = prodList.listIterator();
+        while(it3.hasNext())
+        {
+            var t = it3.next();
+            if (t.get_name() == "Мясо")
+            {
+                finded = true;
+                break;
+            }            
+        }
+        if (finded) 
+        {
+            System.out.println("\nНайден как минимум один элемент с названием \"Мясо\"");
+        }
+        else {
+            System.out.println("\nНе найден ни один элемент с названием \"Мясо\"");
+        }
+
         // Демонстрация работы шаблона класса, например, для типа int
         Integer a = 0;
         DynamicArray<Integer> dynamicList = new DynamicArray<Integer>((Class<Integer>)a.getClass());
