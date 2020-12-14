@@ -677,6 +677,27 @@ int main()
 		cout << t.get_name() << endl;
 	}
 
+	cout << "\n";
+	std::vector<Product>::const_iterator it3; // объявляем итератор
+	bool finded = false;
+	for (it3 = productsVector.begin(); it3 != productsVector.end(); it3++)
+	{
+		auto t = (*it3);
+		if (t.get_name() == "Мясо")
+		{
+			finded = true;
+			break;
+		}
+	}
+	if (finded)
+	{
+		cout << "Нашли как минимум один элемент с названием \"Мясо\"" << endl;
+	}
+	else
+	{
+		cout << "Не найден ни один элемент с названием \"Мясо\"" << endl;
+	}
+
 	int countMeat = 0;
 	int countOther = 0;
 	for (it2 = productsVector.begin(); it2 != productsVector.end(); it2++)
